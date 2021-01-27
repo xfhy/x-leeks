@@ -10,10 +10,15 @@ public interface AlertService {
      * 显示弹窗
      *
      * @param project     当前项目上下文
-
      * @param timeMinutes 时间（分钟）
      */
     void showAlertDialog(Project project, int timeMinutes);
+
+    /**
+     * @param project
+     * @param content 对话框内容
+     */
+    void showAlertDialog(Project project, String content);
 
     /**
      * getInstance

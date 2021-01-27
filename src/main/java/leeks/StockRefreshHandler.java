@@ -1,5 +1,6 @@
 package leeks;
 
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.table.JBTable;
 
@@ -9,11 +10,16 @@ import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
+import business.XDateUtil;
+import constant.Constant;
+import service.AlertService;
 
 public abstract class StockRefreshHandler extends DefaultTableModel {
     private static String[] columnNames = new String[]{"编码", "股票名称", "当前价", "涨跌", "涨跌幅", "最高价", "最低价", "更新时间"};
@@ -228,4 +234,55 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     public void setThreadSleepTime(int threadSleepTime) {
         this.threadSleepTime = threadSleepTime;
     }
+
+    protected List<StockBean> mStockBeans = new CopyOnWriteArrayList<>();
+
+    /**
+     * 看一下 是否需要 展示提醒对话框
+     */
+    protected void showDialogIfNeed() {
+        if (mStockBeans.size() == 0) {
+            return;
+        }
+        if (XDateUtil.isAddingTime(Constant.TARGET_HOUR, Constant.TARGET_START_MINUTE, Constant.TARGET_END_MINUTE)) {
+                        /*ProgressManager.getInstance().executeNonCancelableSection(
+                                () -> AlertService.getInstance().showAlertDialog(null, period));*/
+            StringBuilder stringBuilder = new StringBuilder();
+            for (StockBean stockBean : mStockBeans) {
+                stringBuilder.append(stockBean.getName()).append(" ,  ").append(stockBean.getChangePercent()).append("%").append("<br>");
+            }
+            stringBuilder.append("该加仓了");
+            //展示内容:
+            ProgressManager.getInstance().executeNonCancelableSection(
+                    () -> AlertService.getInstance().showAlertDialog(null, stringBuilder.toString()));
+        } else {
+            System.out.println("没在加仓时间内");
+        }
+    }
+
+    /**
+     * 跌了0.5以上就加进来
+     */
+    protected void addDropFundIfNeed(StockBean bean) {
+        //如果是跌了  则是 -0.5 ?  这样子
+        String gszzl = bean.getChangePercent();
+
+        //todo xfhy 测试
+        gszzl = "-0.7";
+        bean.setChangePercent(gszzl);
+
+        LogUtil.info(gszzl + "----");
+        if (!gszzl.contains("-")) {
+            //涨了
+            return;
+        }
+        try {
+            if (Float.parseFloat(gszzl) < -0.3) {
+                mStockBeans.add(bean);
+            }
+        } catch (Exception ignored) {
+            //格式化失败  不管
+        }
+    }
+
 }

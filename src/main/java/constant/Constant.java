@@ -52,7 +52,7 @@ public class Constant {
         /**
          * title
          */
-        public static final String TITLE = "久坐提醒";
+        public static final String TITLE = "温馨提醒!";
 
         /**
          * 鼠标停留时间
@@ -143,4 +143,9 @@ public class Constant {
             return text;
         }
     }
+
+    public final static int TARGET_HOUR = 17;
+    public final static int TARGET_START_MINUTE = 0;
+    public final static int TARGET_END_MINUTE = 58;
+
 }

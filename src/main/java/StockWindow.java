@@ -5,14 +5,18 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.JBTable;
+
 import org.jetbrains.annotations.NotNull;
+
 import leeks.SinaStockHandler;
 import leeks.StockRefreshHandler;
 import leeks.TencentStockHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockWindow {
@@ -58,30 +62,30 @@ public class StockWindow {
                 .setToolbarPosition(ActionToolbarPosition.TOP);
         JPanel toolPanel = toolbarDecorator.createPanel();
         toolbarDecorator.getActionsPanel().add(refreshTimeLabel, BorderLayout.EAST);
-        toolPanel.setBorder(new EmptyBorder(0,0,0,0));
+        toolPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         mPanel.add(toolPanel, BorderLayout.CENTER);
         // 非主要tab，需要创建，创建时立即应用数据
         apply();
     }
 
-    private static StockRefreshHandler factoryHandler(){
+    private static StockRefreshHandler factoryHandler() {
         boolean useSinaApi = PropertiesComponent.getInstance().getBoolean("key_stocks_sina");
-        if (useSinaApi){
-            if (handler instanceof SinaStockHandler){
+        if (useSinaApi) {
+            if (handler instanceof SinaStockHandler) {
                 return handler;
             }
-            if (handler!=null){
+            if (handler != null) {
                 handler.stopHandle();
             }
             return new SinaStockHandler(table, refreshTimeLabel);
         }
-        if (handler instanceof TencentStockHandler){
+        if (handler instanceof TencentStockHandler) {
             return handler;
         }
-        if (handler!=null){
+        if (handler != null) {
             handler.stopHandle();
         }
-        return  new TencentStockHandler(table, refreshTimeLabel);
+        return new TencentStockHandler(table, refreshTimeLabel);
     }
 
     public static void apply() {
@@ -96,6 +100,7 @@ public class StockWindow {
             handler.handle(loadStocks());
         }
     }
+
     public static void refresh() {
         if (handler != null) {
             boolean colorful = PropertiesComponent.getInstance().getBoolean("key_colorful");
@@ -104,8 +109,12 @@ public class StockWindow {
         }
     }
 
-    private static List<String> loadStocks(){
-        return FundWindow.getConfigList("key_stocks", "[,，]");
+    private static List<String> loadStocks() {
+//        return FundWindow.getConfigList("key_stocks", "[,，]");
+        //todo xfhy 测试
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("sh000001");
+        return strings;
     }
 
 }

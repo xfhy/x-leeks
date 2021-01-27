@@ -66,6 +66,7 @@ public class SinaStockHandler extends StockRefreshHandler {
     }
 
     public void handleResponse(String response) {
+        mStockBeans.clear();
         List<String> refreshTimeList = new ArrayList<>();
         for (String line : response.split("\n")) {
             Matcher matcher = DEFAULT_STOCK_PATTERN.matcher(line);
@@ -98,7 +99,13 @@ public class SinaStockHandler extends StockRefreshHandler {
         }
 
         String text = refreshTimeList.stream().sorted().findFirst().orElse("");
-        SwingUtilities.invokeLater(() -> refreshTimeLabel.setText(text));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshTimeLabel.setText(text);
+                showDialogIfNeed();
+            }
+        });
     }
 
     @Override

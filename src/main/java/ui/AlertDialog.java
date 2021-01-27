@@ -32,10 +32,10 @@ public class AlertDialog extends DialogWrapper {
      */
     private String imagePath;
 
-    public AlertDialog(@Nullable Project project,  String title, String text) {
+    public AlertDialog(@Nullable Project project, String title, String text) {
         super(project, false, true);
         setTitle(title);
-        this.text = text;
+        this.text = "<html>" + text + "</html>";
         this.init();
     }
 
@@ -48,8 +48,8 @@ public class AlertDialog extends DialogWrapper {
     @NotNull
     @Override
     protected Action[] createActions() {
-        exitAction = new CustomRestartAction("休息一会,命重要");
-        okAction = new CustomOKAction("再战五分钟");
+        exitAction = new CustomRestartAction("看看");
+        okAction = new CustomOKAction("梭哈");
         // 设置默认的焦点按钮
         exitAction.putValue(DialogWrapper.DEFAULT_ACTION, true);
         return new Action[]{okAction, exitAction};
@@ -70,10 +70,10 @@ public class AlertDialog extends DialogWrapper {
         @Override
         protected void doAction(ActionEvent actionEvent) {
             // 点击ok的时候进行数据校验
-            ScheduledService.getInstance().removeTask();
+            /*ScheduledService.getInstance().removeTask();
             ScheduledService.getInstance().addTask(Constant.Infor.FIGHT_TIME, false);
 
-            close(CANCEL_EXIT_CODE);
+            close(CANCEL_EXIT_CODE);*/
         }
     }
 
@@ -91,9 +91,9 @@ public class AlertDialog extends DialogWrapper {
         @Override
         protected void doAction(ActionEvent actionEvent) {
             // 点击ok的时候进行数据校验
-            ScheduledService.getInstance().removeTask();
+            /*ScheduledService.getInstance().removeTask();
             ScheduledService.getInstance().addTask(Constant.Infor.REST_TIME, true);
-            close(CANCEL_EXIT_CODE);
+            close(CANCEL_EXIT_CODE);*/
         }
     }
 
@@ -124,28 +124,14 @@ public class AlertDialog extends DialogWrapper {
      * @return {@link JComponent}
      */
     private JComponent createFrame() {
-        Random random = new Random();
-        int index = random.nextInt(99) + 1;
         JPanel panel = new JPanel(new BorderLayout());
-        if (index % 2 == 0) {
-            JLabel text = new JLabel(this.text);
-            text.setFont(new Font("微软雅黑", Font.BOLD, 15));
-            //添加进容器
-            panel.add(text, BorderLayout.CENTER);
-            panel.setSize(600, 300);
-        } else {
-            Constant.AlertDialog[] values = Constant.AlertDialog.values();
-            int num = random.nextInt(values.length);
-            URL iconPath = this.getClass().getResource(values[num].getImagePath());
-            JLabel label = new JLabel(new ImageIcon(iconPath));
-            JLabel text = new JLabel(values[num].getText());
-            setTitle("运动一下");
-            text.setFont(new Font("微软雅黑", Font.BOLD, 15));
-            //添加进容器
-            panel.add(text, BorderLayout.PAGE_END);
-            panel.add(label, BorderLayout.CENTER);
-        }
-
+        JLabel text = new JLabel(this.text);
+        text.setFont(new Font("微软雅黑", Font.BOLD, 15));
+        //添加进容器
+        panel.add(text, BorderLayout.CENTER);
+        panel.setSize(600, 300);
+        SwingUtil.setLocationCenter(panel);
         return panel;
     }
+
 }

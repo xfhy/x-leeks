@@ -51,7 +51,7 @@ public class SettingAction extends AnAction {
             }
         }).createSettingDialog();*/
 
-        ProgressManager.getInstance().executeNonCancelableSection(() -> AlertService.getInstance().showAlertDialog(null, 1));
+        //ProgressManager.getInstance().executeNonCancelableSection(() -> AlertService.getInstance().showAlertDialog(null, 1));
 
         /*try {
             //int period = Integer.parseInt(result);

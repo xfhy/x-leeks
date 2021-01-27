@@ -19,17 +19,13 @@ import service.ScheduledService;
 public class StartComponent implements BaseComponent {
 
     public static boolean isStart = false;
-    private static int TARGET_HOUR = 14;
-    private static int TARGET_START_MINUTE = 47;
-    private static int TARGET_END_MINUTE = 58;
 
     @Override
     public void initComponent() {
         System.out.println("component初始化--------");
 
-        try {
+        /*try {
             //int period = Integer.parseInt(result);
-            //todo xfhy 到时可以直接搞成5*10*1000 = 5分钟
             int period = 1;
             ScheduledService.getInstance().addTask(period * 10 * 1000, new ActionListener() {
                 @Override
@@ -38,8 +34,8 @@ public class StartComponent implements BaseComponent {
                     //2. 如果时间到了,则拿基金数据,如果跌了0.5以上就通知.
                     System.out.println("时间到--------");
                     if (XDateUtil.isAddingTime(TARGET_HOUR, TARGET_START_MINUTE, TARGET_END_MINUTE)) {
-                        ProgressManager.getInstance().executeNonCancelableSection(
-                                () -> AlertService.getInstance().showAlertDialog(null, period));
+                        *//*ProgressManager.getInstance().executeNonCancelableSection(
+                                () -> AlertService.getInstance().showAlertDialog(null, period));*//*
                     }
                 }
             });
@@ -50,7 +46,7 @@ public class StartComponent implements BaseComponent {
             //exception
             ex.printStackTrace();
         }
-        isStart = true;
+        isStart = true;*/
 
     }
 

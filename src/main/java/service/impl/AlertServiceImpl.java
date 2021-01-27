@@ -15,8 +15,6 @@ import ui.AlertDialog;
 
 public class AlertServiceImpl implements AlertService {
 
-    private long time;
-
     private final NotificationGroup NOTIFICATION_GROUP =
             new NotificationGroup("Groovy DSL errors", NotificationDisplayType.BALLOON, true);
 
@@ -31,15 +29,27 @@ public class AlertServiceImpl implements AlertService {
      */
     @Override
     public void showAlertDialog(Project project, int timeMinutes) {
-        if (time == 0) {
-            time = System.currentTimeMillis();
-        }
-        Random random = new Random();
-        notification.setContent(getSubtitle(time,System.currentTimeMillis()));
+        /*Random random = new Random();
+        notification.setContent(getSubtitle(timeMinutes,System.currentTimeMillis()));
         notification.notify(project);
         AlertDialog alertDialog = new AlertDialog(project,
                 Constant.Infor.TITLE,
                 new MessageBuilder().setBody(Constant.Infor.HARM[random.nextInt(Constant.Infor.HARM.length)]).setVariables(timeMinutes).build());
+        alertDialog.show();*/
+    }
+
+    @Override
+    public void showAlertDialog(Project project, String content) {
+        Random random = new Random();
+
+        //应用内 右下角 小通知
+        notification.setContent(content);
+        notification.notify(project);
+
+        //
+       /* MessageBuilder messageBuilder = new MessageBuilder().setBody(Constant.Infor.HARM[random.nextInt(Constant.Infor.HARM.length)]);
+        String text = messageBuilder.setVariables(1).build();*/
+        AlertDialog alertDialog = new AlertDialog(project, Constant.Infor.TITLE, content);
         alertDialog.show();
     }
 

@@ -51,6 +51,8 @@ public class FundWindow implements ToolWindowFactory {
 
     @Override
     public void init(ToolWindow window) {
+        //一进入Android  Studio 就会走这里
+
         JLabel refreshTimeLabel = new JLabel();
         refreshTimeLabel.setToolTipText("最后刷新时间");
         refreshTimeLabel.setBorder(new EmptyBorder(0, 0, 0, 5));
@@ -82,6 +84,10 @@ public class FundWindow implements ToolWindowFactory {
 
     private static List<String> loadFunds(){
         return getConfigList("key_funds", "[,，]");
+        //todo xfhy 测试
+        /*ArrayList<String> strings = new ArrayList<>();
+        strings.add("162605");
+        return strings;*/
     }
 
     public static List<String> getConfigList(String key, String split) {
