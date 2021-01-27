@@ -9,14 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.Random;
 
 import javax.swing.*;
-
-import constant.Constant;
-import service.ScheduledService;
-
 
 public class AlertDialog extends DialogWrapper {
     /**

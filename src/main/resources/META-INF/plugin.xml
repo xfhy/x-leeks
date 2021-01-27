@@ -20,26 +20,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceInterface="service.AlertService"
                             serviceImplementation="service.impl.AlertServiceImpl"/>
-        <applicationService serviceInterface="service.ScheduledService"
-                            serviceImplementation="service.impl.ScheduledServiceImpl"/>
         <toolWindow anchor="left" id="leeks" factoryClass="FundWindow"/>
         <applicationConfigurable id="leeks_settings" instance="SettingsWindow"/>
     </extensions>
 
-    <application-components>
-        <component>
-            <implementation-class>compontent.StartComponent</implementation-class>
-        </component>
-    </application-components>
-    <actions>
-        <!-- Add your actions here -->
-        <action id="Assistant.Setting" class="action.SettingAction" text="Assistant Setting" description="休息提示小助手设置">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt c"/>
-        </action>
-        <action id="action.StopAction" class="action.StopAction" text="Assistant Stop" description="让小助手停止提示">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt s"/>
-        </action>
-    </actions>
 </idea-plugin>
