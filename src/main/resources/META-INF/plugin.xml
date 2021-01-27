@@ -6,14 +6,15 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="173.0"/>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <description><![CDATA[
+    提供基金和股票的实时行情查看，支持港股美股
+    韭菜专用摸鱼插件!<br>
+    韭菜专用摸鱼插件!<br>
+    韭菜专用摸鱼插件!<br>
+        good luck!<br>
+        使用说明：https://github.com/huage2580/leeks
+    ]]></description>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -21,12 +22,13 @@
                             serviceImplementation="service.impl.AlertServiceImpl"/>
         <applicationService serviceInterface="service.ScheduledService"
                             serviceImplementation="service.impl.ScheduledServiceImpl"/>
-        <!-- Add your extensions here -->
+        <toolWindow anchor="left" id="leeks" factoryClass="FundWindow"/>
+        <applicationConfigurable id="leeks_settings" instance="SettingsWindow"/>
     </extensions>
 
     <application-components>
         <component>
-            <implementation-class>compontent.SampleDialogWrapper</implementation-class>
+            <implementation-class>compontent.StartComponent</implementation-class>
         </component>
     </application-components>
     <actions>

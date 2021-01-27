@@ -9,11 +9,15 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    // TinyPinyin核心包，约80KB
+    compile 'com.github.promeg:tinypinyin:2.0.3'
     compile 'org.apache.commons:commons-lang3:3.8.1'
 }
 

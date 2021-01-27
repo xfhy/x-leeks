@@ -5,11 +5,14 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.InputValidator;
+import com.intellij.openapi.wm.WindowManager;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.swing.*;
 
 import compontent.QueryListener;
 import constant.Constant;
@@ -27,7 +30,7 @@ public class SettingAction extends AnAction {
         //拿到项目上下文
         final Project p = e.getProject();
         //创建设置窗口
-        String result = new SettingDialog(p, Constant.Settings.SETTING_WINDOW_TITLE
+       /* String result = new SettingDialog(p, Constant.Settings.SETTING_WINDOW_TITLE
                 , Constant.Settings.SETTING_TIME_SELECTOR_TEXT
                 , Constant.Settings.TIME_SELECT_ARRAY, new InputValidator() {
             @Override
@@ -46,13 +49,15 @@ public class SettingAction extends AnAction {
             public boolean canClose(String s) {
                 return false;
             }
-        }).createSettingDialog();
+        }).createSettingDialog();*/
 
-        try {
-            int period = Integer.parseInt(result);
-            ScheduledService.getInstance().addTask(period * 60 * 1000, e1 -> ProgressManager.getInstance()
-                    .executeNonCancelableSection(
-                            () -> AlertService.getInstance().showAlertDialog(p, period)));
+        ProgressManager.getInstance().executeNonCancelableSection(() -> AlertService.getInstance().showAlertDialog(null, 1));
+
+        /*try {
+            //int period = Integer.parseInt(result);
+            int period = 1;
+            ScheduledService.getInstance().addTask(period * 60 * 1000, e1 ->
+                    ProgressManager.getInstance().executeNonCancelableSection(() -> AlertService.getInstance().showAlertDialog(p, period)));
             //开始运行
             ScheduledService.getInstance().start();
         } catch (Exception ex) {
@@ -73,7 +78,7 @@ public class SettingAction extends AnAction {
                     ScheduledService.getInstance().removeTask();
                 }
             }
-        }, 5, 60, TimeUnit.SECONDS);
+        }, 5, 60, TimeUnit.SECONDS);*/
 
 
     }
