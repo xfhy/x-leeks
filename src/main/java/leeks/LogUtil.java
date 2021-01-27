@@ -14,8 +14,7 @@ public class LogUtil {
     }
 
     public static void info(String text) {
-//        boolean closeLog = PropertiesComponent.getInstance().getBoolean("key_close_log");
-        boolean closeLog = false;
+        boolean closeLog = PropertiesComponent.getInstance().getBoolean("key_close_log");
         if (!closeLog) {
             //打印到安装插件的idea上的event log 上
             new NotificationGroup("Gradle sync", NotificationDisplayType.NONE, true).createNotification(text, MessageType.INFO).notify(project);

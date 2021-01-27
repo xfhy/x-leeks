@@ -110,11 +110,10 @@ public class StockWindow {
     }
 
     private static List<String> loadStocks() {
-//        return FundWindow.getConfigList("key_stocks", "[,，]");
-        //todo xfhy 测试
-        ArrayList<String> strings = new ArrayList<>();
+        return FundWindow.getConfigList("key_stocks", "[,，]");
+        /*ArrayList<String> strings = new ArrayList<>();
         strings.add("sh000001");
-        return strings;
+        return strings;*/
     }
 
 }

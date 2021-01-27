@@ -1,10 +1,7 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
-    <name>休息提示小助手</name>
-    <version>1.1</version>
-    <vendor email="1098832322@qq.com" url="http://wishes-blog.cn">Wishes丶</vendor>
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="173.0"/>
+    <id>com.huage2580.leeks</id>
+    <name>Leeks</name>
+    <vendor email="huage2580@gmail.com" url="http://github.com/huge2580">huage2580</vendor>
 
     <description><![CDATA[
     提供基金和股票的实时行情查看，支持港股美股
@@ -15,6 +12,8 @@
         使用说明：https://github.com/huage2580/leeks
     ]]></description>
 
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+        on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">

@@ -255,8 +255,9 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
             //展示内容:
             ProgressManager.getInstance().executeNonCancelableSection(
                     () -> AlertService.getInstance().showAlertDialog(null, stringBuilder.toString()));
+            LogUtil.info("该加仓了");
         } else {
-            System.out.println("没在加仓时间内");
+            LogUtil.info("没在加仓时间内");
         }
     }
 
@@ -266,11 +267,6 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     protected void addDropFundIfNeed(StockBean bean) {
         //如果是跌了  则是 -0.5 ?  这样子
         String gszzl = bean.getChangePercent();
-
-        //todo xfhy 测试
-        gszzl = "-0.7";
-        bean.setChangePercent(gszzl);
-
         LogUtil.info(gszzl + "----");
         if (!gszzl.contains("-")) {
             //涨了
