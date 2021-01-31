@@ -1,6 +1,9 @@
 
 ### 0. 背景
 
+> 原插件地址： https://github.com/huage2580/leeks 
+> 感谢大佬开源的插件
+
 某天在技术交流群里发现一款AS插件，它的名字叫leeks，感觉有点意思
 
 ![](./pic/stock.png)
