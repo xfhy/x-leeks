@@ -13,6 +13,7 @@ import com.intellij.ui.table.JBTable;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import constant.XConstant;
 import leeks.LogUtil;
 import leeks.TianTianFundHandler;
 
@@ -83,11 +84,13 @@ public class FundWindow implements ToolWindowFactory {
     }
 
     private static List<String> loadFunds(){
-        return getConfigList("key_funds", "[,，]");
-        //todo xfhy 测试
-        /*ArrayList<String> strings = new ArrayList<>();
-        strings.add("162605");
-        return strings;*/
+        if(XConstant.IS_DEBUG) {
+            ArrayList<String> strings = new ArrayList<>();
+            strings.add("162605");
+            return strings;
+        } else {
+            return getConfigList("key_funds", "[,，]");
+        }
     }
 
     public static List<String> getConfigList(String key, String split) {

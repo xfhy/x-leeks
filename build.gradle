@@ -27,7 +27,8 @@ intellij {
     intellij.updateSinceUntilBuild false
     intellij.sameSinceUntilBuild false
     //直接用本地的  不用下载
-    localPath = "D:\\install\\ideaIC-2019.3.5.win"
+//    localPath = "D:\\install\\ideaIC-2019.3.5.win"
+    localPath = "/Applications/IntelliJ IDEA CE.app"
 }
 
 patchPluginXml {

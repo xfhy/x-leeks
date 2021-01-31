@@ -42,8 +42,8 @@ public class AlertDialog extends DialogWrapper {
     @NotNull
     @Override
     protected Action[] createActions() {
-        exitAction = new CustomRestartAction("看看");
-        okAction = new CustomOKAction("梭哈");
+        exitAction = new CustomRestartAction("梭哈");
+        okAction = new CustomOKAction("看看");
         // 设置默认的焦点按钮
         exitAction.putValue(DialogWrapper.DEFAULT_ACTION, true);
         return new Action[]{okAction, exitAction};
@@ -65,9 +65,9 @@ public class AlertDialog extends DialogWrapper {
         protected void doAction(ActionEvent actionEvent) {
             // 点击ok的时候进行数据校验
             /*ScheduledService.getInstance().removeTask();
-            ScheduledService.getInstance().addTask(Constant.Infor.FIGHT_TIME, false);
+            ScheduledService.getInstance().addTask(Constant.Infor.FIGHT_TIME, false);*/
 
-            close(CANCEL_EXIT_CODE);*/
+            close(CANCEL_EXIT_CODE);
         }
     }
 
@@ -86,8 +86,8 @@ public class AlertDialog extends DialogWrapper {
         protected void doAction(ActionEvent actionEvent) {
             // 点击ok的时候进行数据校验
             /*ScheduledService.getInstance().removeTask();
-            ScheduledService.getInstance().addTask(Constant.Infor.REST_TIME, true);
-            close(CANCEL_EXIT_CODE);*/
+            ScheduledService.getInstance().addTask(Constant.Infor.REST_TIME, true);*/
+            close(CANCEL_EXIT_CODE);
         }
     }
 

@@ -8,6 +8,7 @@ import com.intellij.ui.table.JBTable;
 
 import org.jetbrains.annotations.NotNull;
 
+import constant.XConstant;
 import leeks.SinaStockHandler;
 import leeks.StockRefreshHandler;
 import leeks.TencentStockHandler;
@@ -110,10 +111,13 @@ public class StockWindow {
     }
 
     private static List<String> loadStocks() {
-        return FundWindow.getConfigList("key_stocks", "[,，]");
-        /*ArrayList<String> strings = new ArrayList<>();
-        strings.add("sh000001");
-        return strings;*/
+        if (XConstant.IS_DEBUG) {
+            ArrayList<String> strings = new ArrayList<>();
+            strings.add("sh000001");
+            return strings;
+        } else {
+            return FundWindow.getConfigList("key_stocks", "[,，]");
+        }
     }
 
 }

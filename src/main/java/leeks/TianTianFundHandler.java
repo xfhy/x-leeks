@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.*;
 
 import business.XDateUtil;
-import constant.Constant;
+import constant.XConstant;
 import leeks.thread.ThreadUtil;
 import service.AlertService;
 
@@ -26,11 +26,10 @@ public class TianTianFundHandler extends FundRefreshHandler {
 
     private Thread worker;
     private JLabel refreshTimeLabel;
-    //可以改成定时器   然后把时间改成5分钟
     /**
      * 更新数据的间隔时间（秒）
      */
-    private volatile int threadSleepTime = 60;
+    private volatile int threadSleepTime = XConstant.FUND_UPDATE_INTERVAL;
 
     public TianTianFundHandler(JTable table, JLabel refreshTimeLabel) {
         super(table);
@@ -126,7 +125,7 @@ public class TianTianFundHandler extends FundRefreshHandler {
         if (mFundBeans.size() == 0) {
             return;
         }
-        if (XDateUtil.isAddingTime(Constant.TARGET_HOUR, Constant.TARGET_START_MINUTE, Constant.TARGET_END_MINUTE)) {
+        if (XDateUtil.isShowTime(true)) {
                         /*ProgressManager.getInstance().executeNonCancelableSection(
                                 () -> AlertService.getInstance().showAlertDialog(null, period));*/
             StringBuilder stringBuilder = new StringBuilder();
@@ -136,7 +135,10 @@ public class TianTianFundHandler extends FundRefreshHandler {
             stringBuilder.append("该加仓了");
             //展示内容:
             ProgressManager.getInstance().executeNonCancelableSection(
-                    () -> AlertService.getInstance().showAlertDialog(null, stringBuilder.toString()));
+                    () -> {
+                        XDateUtil.updateFundShowDate();
+                        AlertService.getInstance().showAlertDialog(null, stringBuilder.toString());
+                    });
         } else {
             System.out.println("没在加仓时间内");
         }
@@ -148,7 +150,7 @@ public class TianTianFundHandler extends FundRefreshHandler {
     private void addDropFundIfNeed(FundBean bean) {
         //如果是跌了  则是 -0.92  这样样子
         String gszzl = bean.getGszzl();
-        LogUtil.info(gszzl + "----");
+        System.out.println(gszzl + "----");
         if (!gszzl.contains("-")) {
             //涨了
             return;
@@ -163,12 +165,9 @@ public class TianTianFundHandler extends FundRefreshHandler {
     }
 
     public void updateUI() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshTimeLabel.setText(LocalDateTime.now().format(timeFormatter));
-                refreshTimeLabel.setToolTipText("最后刷新时间，刷新间隔" + threadSleepTime + "秒");
-            }
+        SwingUtilities.invokeLater(() -> {
+            refreshTimeLabel.setText(LocalDateTime.now().format(timeFormatter));
+            refreshTimeLabel.setToolTipText("最后刷新时间，刷新间隔" + threadSleepTime + "秒");
         });
     }
 

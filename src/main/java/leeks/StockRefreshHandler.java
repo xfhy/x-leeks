@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import business.XDateUtil;
-import constant.Constant;
+import constant.XConstant;
 import service.AlertService;
 
 public abstract class StockRefreshHandler extends DefaultTableModel {
@@ -28,9 +28,9 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     private boolean colorful = true;
 
     /**
-     * 更新数据的间隔时间（秒）
+     * 股票 更新数据的间隔时间（秒）
      */
-    protected volatile int threadSleepTime = 10;
+    protected volatile int threadSleepTime = XConstant.STOCK_UPDATE_INTERVAL;
 
     public StockRefreshHandler(JTable table) {
         this.table = table;
@@ -43,7 +43,7 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     }
 
     public void refreshColorful(boolean colorful) {
-        if (this.colorful == colorful){
+        if (this.colorful == colorful) {
             return;
         }
         this.colorful = colorful;
@@ -89,7 +89,7 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
         }
     }
 
-    public void setupTable(List<String> code){
+    public void setupTable(List<String> code) {
         for (String s : code) {
             updateData(new StockBean(s));
         }
@@ -103,24 +103,25 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     private void columnColors(boolean colorful) {
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row,
+                                                           int column) {
                 double temp = 0.0;
                 try {
-                    String s = value.toString().replace("%","");
+                    String s = value.toString().replace("%", "");
                     temp = Double.parseDouble(s);
                 } catch (Exception e) {
 
                 }
                 if (temp > 0) {
-                    if (colorful){
+                    if (colorful) {
                         setForeground(JBColor.RED);
-                    }else {
+                    } else {
                         setForeground(JBColor.DARK_GRAY);
                     }
                 } else if (temp < 0) {
-                    if (colorful){
+                    if (colorful) {
                         setForeground(JBColor.GREEN);
-                    }else {
+                    } else {
                         setForeground(JBColor.GRAY);
                     }
                 } else if (temp == 0) {
@@ -135,11 +136,11 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     }
 
     protected void updateData(StockBean bean) {
-        if (bean.getCode() == null){
+        if (bean.getCode() == null) {
             return;
         }
         Vector<Object> convertData = convertData(bean);
-        if (convertData == null){
+        if (convertData == null) {
             return;
         }
         // 获取行
@@ -194,20 +195,21 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     }
 
     private Vector<Object> convertData(StockBean fundBean) {
-        if (fundBean == null){
+        if (fundBean == null) {
             return null;
         }
         String timeStr = "--";
-        if (fundBean.getTime()!=null){
+        if (fundBean.getTime() != null) {
             timeStr = fundBean.getTime().substring(8);
         }
         String changeStr = "--";
         String changePercentStr = "--";
-        if (fundBean.getChange()!=null){
-            changeStr= fundBean.getChange().startsWith("-")?fundBean.getChange():"+"+fundBean.getChange();
+        if (fundBean.getChange() != null) {
+            changeStr = fundBean.getChange().startsWith("-") ? fundBean.getChange() : "+" + fundBean.getChange();
         }
-        if (fundBean.getChangePercent()!=null){
-            changePercentStr= fundBean.getChangePercent().startsWith("-")?fundBean.getChangePercent():"+"+fundBean.getChangePercent();
+        if (fundBean.getChangePercent() != null) {
+            changePercentStr = fundBean.getChangePercent().startsWith("-") ? fundBean.getChangePercent() :
+                    "+" + fundBean.getChangePercent();
         }
         // 与columnNames中的元素保持一致
         Vector<Object> v = new Vector<Object>(columnNames.length);
@@ -244,7 +246,7 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
         if (mStockBeans.size() == 0) {
             return;
         }
-        if (XDateUtil.isAddingTime(Constant.TARGET_HOUR, Constant.TARGET_START_MINUTE, Constant.TARGET_END_MINUTE)) {
+        if (XDateUtil.isShowTime(false)) {
                         /*ProgressManager.getInstance().executeNonCancelableSection(
                                 () -> AlertService.getInstance().showAlertDialog(null, period));*/
             StringBuilder stringBuilder = new StringBuilder();
@@ -254,10 +256,13 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
             stringBuilder.append("该加仓了");
             //展示内容:
             ProgressManager.getInstance().executeNonCancelableSection(
-                    () -> AlertService.getInstance().showAlertDialog(null, stringBuilder.toString()));
-            LogUtil.info("该加仓了");
+                    () -> {
+                        XDateUtil.updateStockShowDate();
+                        AlertService.getInstance().showAlertDialog(null, stringBuilder.toString());
+                    });
+            System.out.println("该加仓了");
         } else {
-            LogUtil.info("没在加仓时间内");
+            System.out.println("没在加仓时间内");
         }
     }
 
@@ -267,7 +272,7 @@ public abstract class StockRefreshHandler extends DefaultTableModel {
     protected void addDropFundIfNeed(StockBean bean) {
         //如果是跌了  则是 -0.5 ?  这样子
         String gszzl = bean.getChangePercent();
-        LogUtil.info(gszzl + "----");
+        System.out.println(gszzl + "----");
         if (!gszzl.contains("-")) {
             //涨了
             return;

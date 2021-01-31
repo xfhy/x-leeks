@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import constant.Constant;
+import constant.XConstant;
 import service.AlertService;
 import ui.AlertDialog;
 
@@ -48,7 +48,7 @@ public class AlertServiceImpl implements AlertService {
         //
        /* MessageBuilder messageBuilder = new MessageBuilder().setBody(Constant.Infor.HARM[random.nextInt(Constant.Infor.HARM.length)]);
         String text = messageBuilder.setVariables(1).build();*/
-        AlertDialog alertDialog = new AlertDialog(project, Constant.Infor.TITLE, content);
+        AlertDialog alertDialog = new AlertDialog(project, XConstant.Infor.TITLE, content);
         alertDialog.show();
     }
 
