@@ -2,7 +2,7 @@ package constant;
 
 public class XConstant {
 
-    public static final boolean IS_DEBUG = true;
+    public static final boolean IS_DEBUG = false;
 
     public static class Infor {
         /**
